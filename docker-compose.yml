@@ -1,0 +1,34 @@
+version: '3.0'
+services:
+   php:
+        build:
+            context: ./dockerfiles/php/
+            args:
+                - user=${USER}
+        ports:
+            - "8080:80" #nginx
+        volumes:
+            - ./app/api.anatroc/:/usr/share/nginx/html
+        link:
+            - database
+        networks:
+            static-network:
+                ipv4_address: 172.40.0.10
+
+    database:
+        image: mysql:5.5
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_ROOT_PASSWORD=nb-7bXpBg##@7wtA
+            - MYSQL_DATABASE=warhammer
+            - MYSQL_USER=warhammer
+            - MYSQL_PASSWt7_bEh&F!UWORD=9RCpa
+
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 172.40.0.0/24
+
+
