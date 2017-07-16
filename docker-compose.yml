@@ -6,7 +6,7 @@ services:
         - "1080:80"
       networks:
         static-network:
-          pv4_address: 172.40.0.12
+          ipv4_address: 172.40.0.12
   mysql:
     image: mysql:5.7
     environment:
@@ -17,7 +17,7 @@ services:
       - mysql-data:/var/lib/mysql:rw
     networks:
       static-network:
-        pv4_address: 172.40.0.11
+        ipv4_address: 172.40.0.11
   php:
     build:
       context: ./docker/dockerfiles/php/
