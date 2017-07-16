@@ -7,7 +7,6 @@ services:
       networks:
         static-network:
           pv4_address: 172.40.0.12
-
   mysql:
     image: mysql:5.7
     environment:
@@ -19,7 +18,6 @@ services:
     networks:
       static-network:
         pv4_address: 172.40.0.11
-
   php:
     build:
       context: ./docker/dockerfiles/php/
@@ -39,12 +37,10 @@ services:
         networks:
           static-network:
             ipv4_address: 172.40.0.10
-
 networks:
   static-network:
     ipam:
       config:
         - subnet: 172.40.0.0/24
-
 volumes:
   mysql-data:
