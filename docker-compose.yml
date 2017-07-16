@@ -31,9 +31,6 @@ services:
         links:
           - mysql
           - maildev
-        depends_on:
-          - mysql
-          - maildev
         networks:
           static-network:
             ipv4_address: 172.40.0.10
