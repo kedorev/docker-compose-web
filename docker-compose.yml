@@ -2,11 +2,11 @@ version: '2'
 services:
   maildev:
     image: djfarrelly/maildev
-      ports:
-        - "1080:80"
-      networks:
-        static-network:
-          ipv4_address: 172.40.0.12
+    ports:
+      - "1080:80"
+    networks:
+      static-network:
+        ipv4_address: 172.40.0.12
   mysql:
     image: mysql:5.7
     environment:
