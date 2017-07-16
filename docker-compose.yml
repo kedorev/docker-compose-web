@@ -21,17 +21,19 @@ services:
   php:
     build:
       context: ./docker/dockerfiles/php/
-        ports:
-          - "8080:80" #nginx
-        volumes:
-          - ./app/example.mysite.api:/usr/share/nginx/html:rw
-          - ./sites/:/etc/nginx/sites-enabled/
-        links:
-          - mysql
-          - maildev
-        networks:
-          static-network:
-            ipv4_address: 172.40.0.10
+      args:
+        - user=${USER}
+      ports:
+        - "8080:80" #nginx
+      volumes:
+        - ./app/example.mysite.api:/usr/share/nginx/html:rw
+        - ./sites/:/etc/nginx/sites-enabled/
+      links:
+        - mysql
+        - maildev
+      networks:
+        static-network:
+          ipv4_address: 172.40.0.10
 networks:
   static-network:
     ipam:
