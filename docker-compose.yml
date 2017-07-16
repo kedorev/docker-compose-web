@@ -1,34 +1,49 @@
-version: '3.0'
-services:
-  php:
-    build:
-      context: ./dockerfiles/php/
-        args:
-          - user=${USER}
-        ports:
-          - "8080:80" #nginx
-        volumes:
-          - ./app/api.anatroc/:/usr/share/nginx/html
-        link:
-          - database
-        networks:
-          static-network:
-            ipv4_address: 172.40.0.10
+version: '2'
+ services:
+     maildev:
+         image: djfarrelly/maildev
+         ports:
+             - "1080:80"
+         networks:
+             static-network:
 
-  database:
-    image: mysql:5.5
-      ports:
-        - "3306:3306"
-        environment:
-          - MYSQL_ROOT_PASSWORD=nb-7bXpBg##@7wtA
-          - MYSQL_DATABASE=warhammer
-          - MYSQL_USER=warhammer
-          - MYSQL_PASSWt7_bEh&F!UWORD=9RCpa
+     mysql:
+         image: mysql:5.7
+         environment:
+             - MYSQL_ROOT_PASSWORD=root
+             - MYSQL_USER=symfony
+             - MYSQL_PASSWORD=symfony
+         volumes:
+             - mysql-data:/var/lib/mysql:rw
+         networks:
+             static-network:
 
-networks:
-  static-network:
-    ipam:
-      config:
-        - subnet: 172.40.0.0/24
+     php:
+         build:
+             context: ./docker/dockerfiles/php/
+             args:
+                 - user=${USER}
+         ports:
+             - "8080:80" #nginx
+         volumes:
+             - ./app/example.mysite.api:/usr/share/nginx/html:rw
+             - ./sites/:/etc/nginx/sites-enabled/
+         links:
+             - mysql
+             - maildev
+         depends_on:
+             - mysql
+             - maildev
+         networks:
+             static-network:
+                 ipv4_address: 172.40.0.10
 
 
+ networks:
+   static-network:
+     ipam:
+       config:
+         - subnet: 172.40.0.0/24
+
+ volumes:
+     mysql-data:
